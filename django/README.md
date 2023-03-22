@@ -1,6 +1,6 @@
-# Django
+# Hospital booking App using Django
 
-- its a python web framework
+- This is my final project from the ALX-back-end development course
 
 - To start django project, run `django-admin startproject nameOfYourProject`
 - To run dev server `python3 manager.py runserver`
