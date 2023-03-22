@@ -1,23 +1,18 @@
-{% load static %}
-
-<link rel="stylesheet" href="{% static 'style.css' %}">
-
-<div class="login-out">
-    {% if user.is_authenticated %}
-     <button><a href="">log-out</a> </button>
-     {% else %}
-     <button> <a href="login">sign-in or sign-up</a>  </button>
-     {% endif%}
-    </div>
-
-{% for feature in features %}
-<div class="kih">
-    {% if user.is_authenticated %}
-    <h2>Welcome, {{user.username}}</h2>
-    {% else %}
-    <h2>Welcom to the Home Page</h2>
-    {% endif %}
-    <h3>{{feature.name}}</h3>
-    <p>{{feature.details}}</p>
-</div>
-{%endfor%}
+{% include 'include.html' %}
+{% include 'navbar.html' %}
+{% block body %}
+<section class="general-area-home">
+        <h1>Book your consultation with your doctor anywhere!</h1>
+        <h3>create an account and save your profile, then book your apppointment</h3>
+        <div class="row" id="row1">
+            <div class="col offset-lg-0">
+                <h2>New to this website..</h2><a class="btn btn-primary" href="{% url 'createaccountpage' %}">Create Account</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="text-center">This website allows the you to book an appointment with the respective doctor whom he want to consult, you can view the old appointments, view the prescription, view the reports.<a data-bs-hover-animate="flash" href="{% url 'aboutpage' %}">For more details..</a></p>
+            </div>
+        </div>
+</section>
+{% endblock %}

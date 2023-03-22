@@ -1,1 +1,0 @@
-# A simple login, sign-up Application
