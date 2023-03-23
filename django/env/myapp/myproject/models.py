@@ -52,4 +52,4 @@ class Appoitment(models.Model):
     prescription = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.patientname+ "you have appoitment with "+self.doctorname
+        return self.patientname+ "you have appoitment with "+ self.doctorname

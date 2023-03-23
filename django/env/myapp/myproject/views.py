@@ -13,11 +13,66 @@ def homepage(request):
 def aboutpage(request):
     return render(request, 'about.html')
 
+def login_admin(request):
+    error = ''
+    if request.method == 'POST':
+         u = request.POST['username']
+         p = request.POST['password']
+         user = authenticate(username=u,password=p)
+         try:
+              if user.is_staff:
+                   login(request,user)
+                   error = 'no'
+              else:
+                   error ='yes' 
+         except:
+              error = 'yes'
+    d = {'error' : error}
+    return render(request, 'adminlogin.html', d)
+    
+
 def loginpage(request):
+    error = ''
+    if request.method == 'POST':
+         u = request.POST['username']
+         p = request.POST['password']
+         user = authenticate(username=u,password=p)
+         try:
+              if user is not None:
+                   login(request,user)
+                   error = 'no'
+                   g = request.user.groups.all()[0].name
+                   if g == 'Doctor':
+                        page = 'doctor'
+                        d = {'error': error,'page':page}
+                        return render(request,'doctorhome.html',d)
+                   elif g == 'Receptionist':
+                        page = "reception"
+                        d = {'error': error, 'page': page}
+                        return render(request,'patienthome.html',d)
+              else:
+                   error ='yes'
+         except:
+              error = 'yes'
+    d = {'error' : error}
     return render(request, 'login.html')
 
 def createaccountpage(request):
-    return render(request, 'createaccount.html')
+        error = ''
+        user ='none'
+        if request.method == 'POST':
+             name = request.POST['name']
+             email = request.POST['email']
+             password = request.POST['password']
+             repeatpassword = request.POST['repeatpassword']
+             gender = request.POST['gender']
+             phonenumber = request.POST['phonenumber']
+             address = request.POST['address']
+             birthdate = request.POST['dateofbirth']
+             bloodgroup =request.POST['bloodgroup']
+             try:
+                  if password == repeatpassword:
+                       Patient.objects.create(name = name, email=email, password=password,gender=gender,phonenumber=phonenumber,address=address,birthdate=birthdate,bloodgroup=bloodgroup)
+                       user = User.objects.create_user(first_name=name,email=email,password=password,gender=gender,phonenumber=phonenumber,address=address,birthdate=birthdate,bloodgroup=bloodgroup)
 
-def login_admin(request):
-    return render(request, 'admin_login')
+
